@@ -40,10 +40,33 @@ textarea.arabic{ font-family:"Amiri", serif; direction:rtl; text-align:center; }
 #translate{ background-color:var(--accent); color:#fff; } #translate:hover{ background:#3b8edc; transform:scale(1.05);}
 #clear{ background-color:var(--danger); color:#fff; } #clear:hover{ background:#dc3737; transform:scale(1.05);}
 
-/* Arabic clickable keyboard */
-.arabic-keyboard{ display:flex; flex-wrap:wrap; justify-content:center; margin-top:12px; }
-.arabic-keyboard button{ flex:1 1 7%; min-width:40px; margin:3px; padding:10px; border-radius:8px; border:none; background: rgba(255,255,255,0.08); color:#fff; font-size:20px; cursor:pointer; transition:0.2s;}
-.arabic-keyboard button:hover{ background: rgba(77,163,255,0.3); transform:translateY(-1px); }
+/* Arabic clickable keyboard - Right to Left */
+.arabic-keyboard{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end; /* Start from right */
+  direction: rtl;            /* Right → Left flow */
+  margin-top:12px;
+}
+
+.arabic-keyboard button{
+  flex:1 1 7%;
+  min-width:40px;
+  margin:3px;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  background: rgba(255,255,255,0.08);
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.arabic-keyboard button:hover{
+  background: rgba(77,163,255,0.3);
+  transform:translateY(-1px);
+}
 
 /* Output box */
 .output-wrap{ display:flex; gap:12px; flex-wrap:wrap; margin-top:18px; }
