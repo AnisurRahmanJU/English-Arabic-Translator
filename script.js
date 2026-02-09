@@ -1,16 +1,34 @@
+
+
 $(function(){
 
-  // Translate button (Bangla -> Arabic)
+  // Track translation direction: true = Bangla → Arabic, false = Arabic → Bangla
+  let bnToAr = true;
+
+  // Translate button
   $("#translate").on("click", function(){
       let text = $("#user").val().trim();
-      if(text==="") return;
+      if(text === "") return;
+
+      // Set source (sl) and target (tl) languages dynamically
+      let sl = bnToAr ? "bn" : "ar";
+      let tl = bnToAr ? "ar" : "bn";
+
       $.getJSON(
-          "https://translate.googleapis.com/translate_a/single?client=gtx&sl=bn&tl=ar&dt=t&q="+encodeURIComponent(text),
+          `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(text)}`,
           function(data){
               let translated = data[0][0][0];
+
+              // Update textareas and output
               $("#output").val(translated);
-              $("#ar-out").text(translated);
-              $("#bn-out").text(text);
+
+              if(bnToAr){
+                  $("#ar-out").text(translated);
+                  $("#bn-out").text(text);
+              } else {
+                  $("#bn-out").text(translated);
+                  $("#ar-out").text(text);
+              }
           }
       );
   });
@@ -58,14 +76,16 @@ $(function(){
       $("#user").toggleClass("bangla arabic");
       $("#output").toggleClass("bangla arabic");
 
-      // Swap select options
+      // Swap select options visually
       let lang1Val = $("#lang1 option").val();
       let lang1Text = $("#lang1 option").text();
       let lang2Val = $("#lang2 option").val();
       let lang2Text = $("#lang2 option").text();
-
       $("#lang1 option").val(lang2Val).text(lang2Text);
       $("#lang2 option").val(lang1Val).text(lang1Text);
+
+      // Toggle translation direction
+      bnToAr = !bnToAr;
   });
 
 });
