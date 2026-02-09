@@ -1,2 +1,1 @@
-# bntoar
- Bangla ↔ Arabic Translator
+ # Bangla ↔ Arabic Translator
