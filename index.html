@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bangla ↔ Arabic Translator</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/gh/solaiman/solaiman-lipi-webfont/solaiman-lipi.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container translator-card">
+    <h1 class="text-center"><i class="fas fa-language"></i> Bangla ↔ Arabic Translator</h1>
+
+    <div class="select mt-4">
+        <select id="lang1">
+            <option value="bn">Bangla</option>
+        </select>
+        <button id="swap" class="btn btn-outline-primary mx-2"><i class="fas fa-exchange-alt"></i></button>
+        <select id="lang2">
+            <option value="ar">Arabic</option>
+        </select>
+    </div>
+
+    <div class="textarea-flex mt-3">
+        <div class="textarea-left">
+            <textarea id="user" class="input-area bangla"></textarea>
+        </div>
+        <div class="textarea-right">
+            <textarea id="output" readonly class="output-area arabic"></textarea>
+        </div>
+    </div>
+
+    <div class="main text-center mt-3">
+        <button id="translate" class="btn btn-success mr-2"><i class="fas fa-arrow-right"></i> Translate</button>
+        <button id="clear" class="btn btn-danger"><i class="fas fa-eraser"></i> Clear</button>
+    </div>
+
+    <!-- Arabic keyboard -->
+    <div class="arabic-keyboard mt-3"></div>
+
+    <div class="output-wrap mt-3">
+        <div class="output-box" id="bn-out"></div>
+        <div class="output-box" id="ar-out"></div>
+    </div>
+
+    <div class="footer mt-4 text-center">
+        Created By <a href="https://github.com/AnisurRahmanJU" target="_blank">Md. Anisur Rahman</a>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
