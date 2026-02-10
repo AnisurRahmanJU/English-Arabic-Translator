@@ -121,7 +121,7 @@ textarea.arabic{
   transform:scale(1.05);
 }
 
-/* Arabic clickable keyboard (RTL) */
+/* Arabic / Bangla clickable keyboard (same style) */
 .arabic-keyboard{
   display:flex;
   flex-wrap:wrap;
