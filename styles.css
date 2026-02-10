@@ -149,6 +149,26 @@ textarea.arabic{
   transform:translateY(-1px);
 }
 
+/* DELETE / X KEY */
+.arabic-keyboard .delete-key{
+  flex:1 1 7%;
+  min-width:40px;
+  margin:3px;
+  padding:10px;
+  border-radius:8px;
+  border:none;
+  background: rgba(255,77,77,0.6);
+  color:#fff;
+  font-size:20px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.arabic-keyboard .delete-key:hover{
+  background: rgba(255,77,77,0.9);
+  transform:translateY(-1px);
+}
+
 /* SPACE KEY */
 .arabic-keyboard .space-key{
   flex:1 1 100%;
@@ -216,7 +236,8 @@ textarea.arabic{
     height:100px;
   }
 
-  .arabic-keyboard button{
+  .arabic-keyboard button,
+  .arabic-keyboard .delete-key{
     font-size:18px;
     min-width:30px;
   }
