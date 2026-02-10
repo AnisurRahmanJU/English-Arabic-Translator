@@ -1,5 +1,3 @@
-
-
 $(function(){
 
   // true = Bangla → Arabic | false = Arabic → Bangla
@@ -44,7 +42,7 @@ $(function(){
   });
 
   /* =========================
-     ARABIC KEYBOARD
+     KEYBOARDS
   ========================== */
   const arabicKeys = [
       "ا","ب","ت","ث","ج","ح","خ","د","ذ","ر","ز","س","ش","ص","ض",
@@ -52,28 +50,62 @@ $(function(){
       "ء","ئ","أ","ؤ","لا","ى","ة"
   ];
 
-  const keyboardDiv = $(".arabic-keyboard");
+  const banglaKeys = [
+      "অ","আ","ই","ঈ","উ","ঊ","এ","ঐ","ও","ঔ",
+      "ক","খ","গ","ঘ","ঙ",
+      "চ","ছ","জ","ঝ","ঞ",
+      "ট","ঠ","ড","ঢ","ণ",
+      "ত","থ","দ","ধ","ন",
+      "প","ফ","ব","ভ","ম",
+      "য","র","ল","শ","ষ","স","হ","ড়","ঢ়","য়",
+      "ং","ঃ","ঁ","্","া","ি","ী","ু","ূ","ে","ৈ","ো","ৌ","্র","ৗ"
+  ];
 
-  arabicKeys.forEach(key=>{
-      const btn = $("<button>")
-        .addClass("key")
-        .text(key)
+  const keyboardDiv = $(".arabic-keyboard"); // single div for both keyboards
+
+  function renderKeyboard(isBangla){
+      keyboardDiv.empty(); // clear old keys
+      const keys = isBangla ? banglaKeys : arabicKeys;
+
+      // Keyboard keys
+      keys.forEach(key=>{
+          const btn = $("<button>")
+            .addClass("key")
+            .text(key)
+            .css({"flex":"1 1 7%", "margin":"2px"})
+            .on("click", ()=>{
+                $("#user").val($("#user").val() + key);
+            });
+          keyboardDiv.append(btn);
+      });
+
+      // Single DELETE X button at the **right side**
+      const delBtn = $("<button>")
+        .addClass("key delete-key")
+        .text("X")
+        .css({
+            "flex":"1 1 7%",
+            "margin":"2px",
+            "background":"rgba(239,68,68,0.6)"
+        })
         .on("click", ()=>{
-            $("#user").val($("#user").val() + key);
+            let val = $("#user").val();
+            $("#user").val(val.substring(0,val.length-1)); // remove last char
         });
+      keyboardDiv.append(delBtn);
 
-      keyboardDiv.append(btn);
-  });
+      // Space key (separate row)
+      const spaceBtn = $("<button>")
+        .addClass("space-key")
+        .text("SPACE")
+        .on("click", ()=>{
+            $("#user").val($("#user").val() + " ");
+        });
+      keyboardDiv.append(spaceBtn);
+  }
 
-  // SPACE KEY
-  const spaceBtn = $("<button>")
-    .addClass("space-key")
-    .text("SPACE")
-    .on("click", ()=>{
-        $("#user").val($("#user").val() + " ");
-    });
-
-  keyboardDiv.append(spaceBtn);
+  // Initial keyboard (Bangla)
+  renderKeyboard(true);
 
   /* =========================
      SWAP LANGUAGES
@@ -98,15 +130,16 @@ $(function(){
       // Swap select text (visual)
       let lang1 = $("#lang1 option:selected");
       let lang2 = $("#lang2 option:selected");
-
       let tempText = lang1.text();
       let tempVal  = lang1.val();
-
       lang1.text(lang2.text()).val(lang2.val());
       lang2.text(tempText).val(tempVal);
 
       // Toggle direction flag
       bnToAr = !bnToAr;
+
+      // Render correct keyboard
+      renderKeyboard(bnToAr);
   });
 
 });
