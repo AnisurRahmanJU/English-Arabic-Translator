@@ -1,3 +1,6 @@
+/* =========================
+   BASE STYLES
+========================= */
 :root{
   --bg: #0b1220;
   --card: rgba(255,255,255,0.06);
@@ -7,12 +10,11 @@
   --muted: rgba(234,241,255,0.75);
   --accent: #4da3ff;
   --danger: #ef4444;
-  --shadow: 0 20px 60px rgba(0,0,0,0.35);
 }
 
 body{
   min-height:100vh;
-  font-family: "SolaimanLipi", sans-serif;
+  font-family: "JetBrains Mono", monospace;
   background: radial-gradient(1200px 600px at 20% 10%, rgba(77,163,255,0.25), transparent 60%),
               radial-gradient(1000px 600px at 90% 30%, rgba(34,197,94,0.18), transparent 55%),
               linear-gradient(180deg, #070b15, #0b1220);
@@ -20,10 +22,14 @@ body{
   padding:20px;
 }
 
-.container{ max-width: 900px; margin:auto; }
+.container{
+  max-width:900px;
+  margin:auto;
+}
+
 h1{text-align:center; margin-bottom:20px;}
 
-/* Selects */
+/* Select boxes */
 .select{
   display:flex;
   justify-content:center;
@@ -44,17 +50,19 @@ h1{text-align:center; margin-bottom:20px;}
   cursor:not-allowed;
 }
 
-/* Textarea */
+/* Textarea container */
 .textarea-flex{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
 }
 
-.textarea-left,.textarea-right{
+.textarea-left,
+.textarea-right{
   flex:1 1 48%;
 }
 
+/* Textareas */
 textarea{
   width:100%;
   padding:12px;
@@ -63,20 +71,19 @@ textarea{
   font-size:22px;
   font-weight:700;
   margin-bottom:12px;
-  height:120px;
+  height:150px;
   outline:none;
   background: rgba(255,255,255,0.06);
   color: var(--text);
+  font-family:"JetBrains Mono", monospace; /* সব textarea এখন JetBrains Mono */
+  text-align:left; /* Arabic textarea ও left-align করা যাবে না, পরে direction দ্বারা handle */
 }
 
-textarea.bangla{
-  font-family:"SolaimanLipi";
+textarea.english{
   direction:ltr;
-  text-align:left;
 }
 
 textarea.arabic{
-  font-family:"Amiri", serif;
   direction:rtl;
   text-align:center;
 }
@@ -97,31 +104,16 @@ textarea.arabic{
   font-size:18px;
   font-weight:700;
   cursor:pointer;
-  transition:0.2s ease;
   border:none;
+  transition:0.2s;
 }
 
-#translate{
-  background-color:var(--accent);
-  color:#fff;
-}
+#translate{background-color:var(--accent); color:#fff;}
+#translate:hover{background:#3b8edc; transform:scale(1.05);}
+#clear{background-color:var(--danger); color:#fff;}
+#clear:hover{background:#dc3737; transform:scale(1.05);}
 
-#translate:hover{
-  background:#3b8edc;
-  transform:scale(1.05);
-}
-
-#clear{
-  background-color:var(--danger);
-  color:#fff;
-}
-
-#clear:hover{
-  background:#dc3737;
-  transform:scale(1.05);
-}
-
-/* Arabic / Bangla clickable keyboard (same style) */
+/* Keyboard */
 .arabic-keyboard{
   display:flex;
   flex-wrap:wrap;
@@ -142,6 +134,7 @@ textarea.arabic{
   font-size:20px;
   cursor:pointer;
   transition:0.2s;
+  font-family:"JetBrains Mono", monospace; /* Keyboard text JetBrains Mono */
 }
 
 .arabic-keyboard button:hover{
@@ -149,41 +142,25 @@ textarea.arabic{
   transform:translateY(-1px);
 }
 
-/* DELETE / X KEY */
 .arabic-keyboard .delete-key{
-  flex:1 1 7%;
-  min-width:40px;
-  margin:3px;
-  padding:10px;
-  border-radius:8px;
-  border:none;
   background: rgba(255,77,77,0.6);
-  color:#fff;
-  font-size:20px;
-  cursor:pointer;
-  transition:0.2s;
 }
-
 .arabic-keyboard .delete-key:hover{
   background: rgba(255,77,77,0.9);
-  transform:translateY(-1px);
 }
 
-/* SPACE KEY */
 .arabic-keyboard .space-key{
   flex:1 1 100%;
-  min-width:100%;
   padding:12px;
   font-size:18px;
   letter-spacing:2px;
   background: rgba(255,255,255,0.12);
 }
-
 .arabic-keyboard .space-key:hover{
   background: rgba(77,163,255,0.45);
 }
 
-/* Output box */
+/* Output boxes */
 .output-wrap{
   display:flex;
   gap:12px;
@@ -200,15 +177,14 @@ textarea.arabic{
   font-weight:800;
   color:#fff;
   text-align:center;
+  font-family:"JetBrains Mono", monospace; /* Output সব JetBrains Mono */
 }
 
 #ar-out{
-  font-family:"Amiri", serif;
   direction:rtl;
 }
 
-#bn-out{
-  font-family:"SolaimanLipi", sans-serif;
+#en-out{
   direction:ltr;
   text-align:left;
 }
@@ -221,32 +197,78 @@ textarea.arabic{
   font-size:14px;
 }
 
-/* Responsive */
+/* =========================
+   MOBILE RESPONSIVE FIX
+========================= */
 @media(max-width:768px){
+  /* Stack textareas vertically */
   .textarea-flex{
-    flex-direction:column;
+    flex-direction:column !important;
   }
 
-  .textarea-left,.textarea-right{
-    flex:1 1 100%;
+  .textarea-left,
+  .textarea-right{
+    flex:1 1 100% !important;
+    width:100% !important;
   }
 
   textarea{
-    font-size:20px;
-    height:100px;
-  }
-
-  .arabic-keyboard button,
-  .arabic-keyboard .delete-key{
+    width:100% !important;
+    height:160px;
     font-size:18px;
-    min-width:30px;
   }
 
+  /* Stack output boxes vertically */
+  .output-wrap{
+    flex-direction:column !important;
+  }
   .output-box{
+    flex:1 1 100% !important;
+    width:100% !important;
     font-size:26px;
   }
 
-  .main button{
+  /* Keyboard adjust */
+  .arabic-keyboard{
+    justify-content:center !important;
+  }
+  .arabic-keyboard button,
+  .arabic-keyboard .delete-key{
     font-size:16px;
+    min-width:35px;
+    padding:8px;
+  }
+  .arabic-keyboard .space-key{
+    font-size:16px;
+    padding:10px;
+  }
+
+  /* Buttons full width */
+  .main button{
+    flex:1 1 100% !important;
+    font-size:16px;
+    padding:12px;
+  }
+}
+
+/* Extra small devices */
+@media(max-width:480px){
+  textarea{
+    height:140px;
+    font-size:16px;
+  }
+  .output-box{
+    font-size:22px;
+  }
+  .arabic-keyboard button,
+  .arabic-keyboard .delete-key{
+    font-size:14px;
+    min-width:28px;
+  }
+  .arabic-keyboard .space-key{
+    font-size:14px;
+  }
+  .main button{
+    font-size:14px;
   }
 }
