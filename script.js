@@ -1,26 +1,18 @@
 $(function () {
 
-  // true = Bangla → Arabic | false = Arabic → Bangla
-  let bnToAr = true;
+  // true = English → Arabic | false = Arabic → English
+  let enToAr = true;
 
   const keyboardDiv = $(".arabic-keyboard");
 
   // =========================
-  // FULL BANGLA KEYBOARD
+  // FULL ENGLISH KEYBOARD
   // =========================
-  const banglaKeys = [
-    "অ","আ","ই","ঈ","উ","ঊ",
-    "ঋ","এ","ঐ","ও","ঔ",
-    "ক","খ","গ","ঘ","ঙ",
-    "চ","ছ","জ","ঝ","ঞ",
-    "ট","ঠ","ড","ঢ","ণ",
-    "ত","থ","দ","ধ","ন",
-    "প","ফ","ব","ভ","ম",
-    "য","র","ল","শ","ষ","স",
-    "হ","য়", "ক্ষ", "ড়", "ঢ়",
-    "ং","ঃ","ঁ","্","া",
-    "ি","ী","ু","ূ","ৃ",
-    "ে","ৈ","ো","ৌ",
+  const englishKeys = [
+    "A","B","C","D","E","F","G","H","I","J",
+    "K","L","M","N","O","P","Q","R","S","T",
+    "U","V","W","X","Y","Z",
+    
   ];
 
   // =========================
@@ -36,42 +28,31 @@ $(function () {
   // FIXED KEY SIZE SYSTEM
   // =========================
   function getColumns() {
-    // Desktop: 12 keys per row
-    // Tablet: 10 keys per row
-    // Mobile: 8 keys per row
     const w = window.innerWidth;
-
     if (w <= 420) return 8;
     if (w <= 768) return 10;
     return 12;
   }
 
   // =========================
-  // RENDER KEYBOARD (PERFECT ALIGNMENT)
+  // RENDER KEYBOARD
   // =========================
   function renderKeyboard(keys) {
     keyboardDiv.empty();
 
-    // Direction fix
-    if (bnToAr) {
+    if (enToAr) {
       keyboardDiv.css({ "direction": "ltr", "justify-content": "flex-start" });
     } else {
       keyboardDiv.css({ "direction": "rtl", "justify-content": "flex-end" });
     }
 
     const cols = getColumns();
-
-    // Calculate key width (dynamic)
-    // Keyboard width is container width
     const kbWidth = keyboardDiv.innerWidth();
-    const gap = 6; // your CSS margin approx
+    const gap = 6;
     const totalGap = (cols + 1) * gap;
     const keyW = Math.floor((kbWidth - totalGap) / cols);
-
-    // Ensure minimum width (so key never becomes too small)
     const finalKeyW = Math.max(keyW, 36);
 
-    // Add all character keys
     keys.forEach((key) => {
       const btn = $("<button>")
         .addClass("key")
@@ -89,7 +70,7 @@ $(function () {
       keyboardDiv.append(btn);
     });
 
-    // Add Delete X (same size as key)
+    // Delete button
     const delBtn = $("<button>")
       .addClass("delete-key")
       .text("X")
@@ -106,7 +87,7 @@ $(function () {
 
     keyboardDiv.append(delBtn);
 
-    // Space (full width)
+    // Space button
     const spaceBtn = $("<button>")
       .addClass("space-key")
       .text("SPACE")
@@ -123,26 +104,22 @@ $(function () {
     keyboardDiv.append(spaceBtn);
   }
 
-  // Initial load Bangla keyboard
-  renderKeyboard(banglaKeys);
+  // Initial load English keyboard
+  renderKeyboard(englishKeys);
 
-  // =========================
-  // AUTO RESIZE KEYBOARD ON SCREEN RESIZE
-  // =========================
+  // Auto resize
   $(window).on("resize", function () {
-    if (bnToAr) renderKeyboard(banglaKeys);
+    if (enToAr) renderKeyboard(englishKeys);
     else renderKeyboard(arabicKeys);
   });
 
-  // =========================
-  // TRANSLATE BUTTON
-  // =========================
+  // Translate button
   $("#translate").on("click", function () {
     let text = $("#user").val().trim();
     if (text === "") return;
 
-    let sl = bnToAr ? "bn" : "ar";
-    let tl = bnToAr ? "ar" : "bn";
+    let sl = enToAr ? "en" : "ar";
+    let tl = enToAr ? "ar" : "en";
 
     $.getJSON(
       `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sl}&tl=${tl}&dt=t&q=${encodeURIComponent(text)}`,
@@ -151,62 +128,49 @@ $(function () {
 
         $("#output").val(translated);
 
-        if (bnToAr) {
-          $("#bn-out").text(text);
+        if (enToAr) {
+          $("#en-out").text(text);
           $("#ar-out").text(translated);
         } else {
           $("#ar-out").text(text);
-          $("#bn-out").text(translated);
+          $("#en-out").text(translated);
         }
       }
     );
   });
 
-  // =========================
-  // CLEAR BUTTON
-  // =========================
+  // Clear button
   $("#clear").on("click", function () {
     $("#user").val("");
     $("#output").val("");
-    $("#bn-out").text("");
+    $("#en-out").text("");
     $("#ar-out").text("");
   });
 
-  // =========================
-  // SWAP BUTTON
-  // =========================
+  // Swap button
   $("#swap").on("click", function () {
-
-    // Swap textarea values
     let userVal = $("#user").val();
     let outputVal = $("#output").val();
     $("#user").val(outputVal);
     $("#output").val(userVal);
 
-    // Swap output texts
-    let bnText = $("#bn-out").text();
+    let enText = $("#en-out").text();
     let arText = $("#ar-out").text();
-    $("#bn-out").text(arText);
-    $("#ar-out").text(bnText);
+    $("#en-out").text(arText);
+    $("#ar-out").text(enText);
 
-    // Toggle textarea class
-    $("#user, #output").toggleClass("bangla arabic");
+    $("#user, #output").toggleClass("english arabic");
 
-    // Swap select options
     let lang1 = $("#lang1 option");
     let lang2 = $("#lang2 option");
-
     let tempText = lang1.text();
     let tempVal = lang1.val();
-
     lang1.text(lang2.text()).val(lang2.val());
     lang2.text(tempText).val(tempVal);
 
-    // Toggle translation direction
-    bnToAr = !bnToAr;
+    enToAr = !enToAr;
 
-    // Render correct keyboard
-    if (bnToAr) renderKeyboard(banglaKeys);
+    if (enToAr) renderKeyboard(englishKeys);
     else renderKeyboard(arabicKeys);
   });
 
