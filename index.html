@@ -1,13 +1,12 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bangla ↔ Arabic Translator</title>
+<title>English ↔ Arabic Translator</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/gh/solaiman/solaiman-lipi-webfont/solaiman-lipi.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
 
 <!-- Font Awesome -->
@@ -22,11 +21,11 @@
 <body>
 
 <div class="container translator-card">
-    <h1 class="text-center"><i class="fas fa-language"></i><b> Bangla↔Arabic Translator</b></h1>
+    <h1 class="text-center"><i class="fas fa-language"></i><b> English ↔ Arabic Translator</b></h1>
 
-    <div class="select mt-4">
+    <div class="select mt-4 text-center">
         <select id="lang1">
-            <option value="bn">Bangla</option>
+            <option value="en">English</option>
         </select>
         <button id="swap" class="btn btn-outline-primary mx-2"><i class="fas fa-exchange-alt"></i></button>
         <select id="lang2">
@@ -34,12 +33,12 @@
         </select>
     </div>
 
-    <div class="textarea-flex mt-3">
-        <div class="textarea-left">
-            <textarea id="user" class="input-area bangla"></textarea>
+    <div class="textarea-flex mt-3 d-flex justify-content-between">
+        <div class="textarea-left w-50 pr-2">
+            <textarea id="user" class="input-area english form-control" placeholder="Type English here..."></textarea>
         </div>
-        <div class="textarea-right">
-            <textarea id="output" readonly class="output-area arabic"></textarea>
+        <div class="textarea-right w-50 pl-2">
+            <textarea id="output" readonly class="output-area arabic form-control" placeholder="Arabic translation will appear here..."></textarea>
         </div>
     </div>
 
@@ -48,12 +47,12 @@
         <button id="clear" class="btn btn-danger"><i class="fas fa-eraser"></i> Clear</button>
     </div>
 
-    <!-- Arabic keyboard -->
+    <!-- Keyboard -->
     <div class="arabic-keyboard mt-3"></div>
 
-    <div class="output-wrap mt-3">
-        <div class="output-box" id="bn-out"></div>
-        <div class="output-box" id="ar-out"></div>
+    <div class="output-wrap mt-3 d-flex justify-content-between">
+        <div class="output-box" id="en-out">English Input</div>
+        <div class="output-box" id="ar-out">Arabic Output</div>
     </div>
 
     <div class="footer mt-4 text-center">
