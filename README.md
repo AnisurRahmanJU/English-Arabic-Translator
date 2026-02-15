@@ -1,2 +1,2 @@
- # Bangla ↔ Arabic Translator
+ # English ↔ Arabic Translator
  
