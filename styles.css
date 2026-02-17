@@ -81,11 +81,15 @@ textarea{
 
 textarea.english{
   direction:ltr;
+  height:100px;
+  font-size:25px;
 }
 
 textarea.arabic{
   direction:rtl;
-  text-align:center;
+  text-align:right;
+  height:100px;
+  font-size:25px;
 }
 
 /* Buttons */
@@ -182,11 +186,12 @@ textarea.arabic{
 
 #ar-out{
   direction:rtl;
+  text-align:center;
 }
 
 #en-out{
   direction:ltr;
-  text-align:left;
+  text-align:center;
 }
 
 /* Footer */
@@ -214,7 +219,7 @@ textarea.arabic{
 
   textarea{
     width:100% !important;
-    height:160px;
+    height:300px;
     font-size:18px;
   }
 
