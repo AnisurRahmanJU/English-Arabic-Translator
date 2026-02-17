@@ -1,2 +1,2 @@
- # English ↔ Arabic Translator
+ # English Arabic Translator
  
